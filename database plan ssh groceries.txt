@@ -1,0 +1,40 @@
+ssh_groceries_database
+
+supermarkets table:
+   supermarket_name (PK) string 
+   open bool (signifies if open or closed, true(1)=open false(0)=closed)
+
+groceries table:
+   supermarket_name (FK) string
+   grocery_name string
+   grocery_id int
+   grocery_type (e.g. fruit_and_veg) string
+   price string (was going to be double but double cannot have £)
+   offer (e.g. 25% off, BOGOF) string
+
+shared_orders table:
+   order_id int
+   supermarket_name(FK)
+   items_in_order string (this will be a list of grocery_id values, e.g. 147, 24, 
+   192 alongside their quantities if there are multiple for example 147(x2) 24(x4) 192)
+   people_in_order: string
+   price_of_their_items double
+   total_delivery_fee double
+   order_name string
+   order_total_cost double 
+   current bool (true(1) if current, false(0) if past)
+
+ADD TO GROCERIES IN THIS ORDER:
+Sainsbury's 
+Morrisons
+Aldi
+Asda
+Co-op
+Farmfoods
+Marks & Spencer
+Morrisons
+Sainsbury's
+Tesco
+Waitrose
+   
+   
