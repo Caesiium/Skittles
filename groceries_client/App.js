@@ -7,22 +7,20 @@ import {
   Link
 } from "react-router-dom";
 import NewOrder from './NewOrder';
-import ViewOrders from './ViewOrders';
+import AllOrders from './AllOrders';
+import EditOrder from './EditOrder';
 
 function App() {
   return(
     <Router>
-        <nav>
-          <Link to="/NewOrder">
-            <button>New order</button>
-          </Link>
-          <Link to="/ViewOrders">
-            <button>View orders</button>
-          </Link>
-        </nav>
+      <ul className='navBar'>
+        <li><Link to="/NewOrder">+</Link></li>
+        <li><Link to="/AllOrders"> View Orders</Link></li>
+      </ul>
         <Routes>
           <Route path="/NewOrder" element={<NewOrder />} />
-          <Route path="/ViewOrders" element={<ViewOrders />} />
+          <Route path="/AllOrders" element={<AllOrders />} />
+          <Route path="/EditOrder" element={<EditOrder />} />
         </Routes>
     </Router>
   );

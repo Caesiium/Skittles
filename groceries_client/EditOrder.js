@@ -1,8 +1,8 @@
-
+import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-function NewOrder(){
+function EditOrder(){
     // const [data, setData] = useState(null);
     // const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null);
@@ -36,24 +36,45 @@ function NewOrder(){
                 <li key={post.title}>{post.title}</li>
             ))} */}
            </ul>
-           <form className='newOrder'>
-            <label>
-                Supermarket
-                <select className='superMarket'>
-                    <option value="NoOp">Please Choose a Shop</option>
-                    <option value = "Sainsburys">Sainsburys</option>
-                    <option value="Lidl">Lidl</option>
-                    <option value="Tesco">Tesco</option>
-                    <option value="Aldi">Aldi</option>
+           <p>
+                Order Number:
+           </p>
+           <table className='Orders'>
+                <tr>
+                    <th>Item</th>
+                    <th>Unit cost</th>
+                    <th>No. Units</th>
+                    <th>Total Cost</th>
+                    <th>Added by</th>
+                </tr>
+           </table>
+
+           <br/>
+           <table className='Orders'>
+                <tr>
+                    <th>User</th>
+                    <th>Total Cost</th>
+                </tr>
+           </table>
+           <p>
+                Total cost:
+           </p>
+           <label>
+                Apply discount
+                <select className='discount'>
+                    <option value="NoOp">Please Choose an available discount</option>
                 </select>
             </label>
-            <br/>
-            <button><Link to="/EditOrder">Start Order</Link></button>
-           </form>
+            <p>
+                <button className='finish'>
+                    Complete order
+                </button>
+            </p>
+            
         </div>
         
         
     );
 }
 
-export default NewOrder;
+export default EditOrder;
