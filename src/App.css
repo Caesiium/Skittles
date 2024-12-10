@@ -1,0 +1,157 @@
+.App {
+  background-color: #F1F2F6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  margin: 10%;
+  padding: 20px;
+  background-color: #AEB8FE;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  font-size: 64px;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  color: #27187E;
+}
+
+.resultContainer {
+  flex-direction: column;
+  display: flex;
+  height: 400px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.historyContainer {
+  flex-direction: column;
+  display: flex;
+  height: 200px;
+  align-items: center;
+  flex-grow: 5;
+  justify-content: flex-start;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.inputContainer > .errorLabel {
+  color: red;
+  font-size: 12px;
+}
+
+.inputBox {
+  height: 48px;
+  width: 400px;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+}
+
+.navBar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #758BFD;
+}
+.navBar li {
+  display: block;
+  color: #F1F2F6;
+  text-align: center;
+  padding: 1%;
+  text-decoration: none;
+  float: left;
+}
+.navBar a {
+  text-decoration: none;
+  color: #F1F2F6;
+}
+
+.navBar li:hover {
+  background-color: #27187E;
+}
+
+.navBar .active {
+  background-color: #FF8600 ;
+}
+
+.Orders {
+  color:#F1F2F6 ;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.Orders td, .Orders th {
+  border: 1px solid #F1F2F6;
+  padding: 1%
+}
+
+.Orders tr:hover {
+  background-color: #AEB8FE;
+}
+
+.Orders th {
+  padding: auto;
+  text-align: center;
+  background-color: #FF8600;
+  color: #F1F2F6;
+}
+
+.newOrder {
+  /* border-radius: 10%; */
+  background-color: #AEB8FE;
+  color: #F1F2F6;
+  padding: 2%;
+  /* width: 50%;
+  height: 50%; */
+  justify-content: center;
+  align-items: center;
+}
+.newOrder label {
+  display: flex;
+  flex-direction: column;
+  margin: 2%;
+}
+
+.newOrder button {
+  background-color: #FF8600;
+  color: #F1F2F6;
+  border-radius: 5%;
+  justify-content: center;
+  align-items: center;
+  display: inline-block;
+  text-decoration: none;
+}
+.superMarket {
+  padding: 1%;
+  color: #F1F2F6;
+  background-color: #758BFD;
+}
