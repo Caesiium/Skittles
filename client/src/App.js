@@ -12,48 +12,58 @@ import EditOrder from './EditOrder';
 import ShopItem from './ShopItems.js';
 
 function App() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [emailError, setEmailError] = useState('')
-  const [passError, setPassError] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passError, setPassError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // const navigate = useNavigate()
 
-    const onButtonCLick = () => {
-        setEmailError('')
-        setPassError('')
+  // const navigate = useNavigate();
+
+  const onButtonCLick = () => {
+    setEmailError('')
+    setPassError('')
+
       //email and password validation
-        if('' === email){
-          setEmailError('Please enter your email')
-          return
-        }
+    if('' === email){
+      setEmailError('Please enter your email')
+      return
+    }
 
-        if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-          setEmailError('Please enter a valid email')
-          return
-        }
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      setEmailError('Please enter a valid email')
+      return
+    }
       
-        if ('' === password) {
-          setPassError('Please enter a password')
-          return
-        }
+    if ('' === password) {
+      setPassError('Please enter a password')
+      return
+    }
 
         //add extra validation to check if email and password are stored for users
         //also check that password matches email
+      setIsLoggedIn(true);
     } 
 
   return(
     <Router>
-      
-        <ul className='navBar'>
-          <li><Link to="/NewOrder">+</Link></li>
-          <li><Link to="/AllOrders"> View Orders</Link></li>
-        </ul>
-        <Routes>
-          <Route 
-          path="/"
-          element={
-              <div className='main'>
+      {isLoggedIn ? (
+        <>
+          <ul className='navBar'>
+            <li><Link to="/NewOrder">+</Link></li>
+            <li><Link to="/AllOrders"> View Orders</Link></li>
+          </ul>
+          <Routes>
+            <Route path="/NewOrder" element={<NewOrder />} />
+            <Route path="/AllOrders" element={<AllOrders />} />
+            <Route path="/EditOrder" element={<EditOrder />} />
+            <Route path='/ShopItems' element={<ShopItem />} />
+          </Routes>
+        </>
+        
+      ) : (
+        <div className='main'>
               <div className='title'>
                   <div>Login</div>
               </div>
@@ -86,17 +96,8 @@ function App() {
                   />
               </div>
             </div>
-          }
-          />
-        
-        
-          <Route path="/NewOrder" element={<NewOrder />} />
-          <Route path="/AllOrders" element={<AllOrders />} />
-          <Route path="/EditOrder" element={<EditOrder />} />
-          <Route path='/ShopItems' element={<ShopItem />} />
-        </Routes>
-    </Router>
-    
+          )}
+    </Router>   
   );
 }
 
