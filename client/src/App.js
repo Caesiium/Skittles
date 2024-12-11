@@ -1,4 +1,5 @@
 import './App.css';
+import axios from 'axios';
 import React, {useState} from "react";
 import {
   BrowserRouter as Router,
@@ -9,7 +10,7 @@ import {
 import NewOrder from './NewOrder';
 import AllOrders from './AllOrders';
 import EditOrder from './EditOrder';
-import ShopItem from './ShopItems.js';
+import ShopItem from './ShopItems';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -21,9 +22,27 @@ function App() {
 
   // const navigate = useNavigate();
 
+  const handleSearch = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/validate', {
+        userEmail: email, userPassword: password,
+      });
+      if(response.data.message === 'Successful login'){
+        console.log('User validated');
+      }
+      else{
+        setPassError('Invalid email or password');
+        setEmailError('Invalid email or password');
+      }
+    } catch (err){
+      console.error(err.response?.data?.message || 'Error validating');
+    }
+  };
+
   const onButtonCLick = () => {
     setEmailError('')
     setPassError('')
+    handleSearch(email, password);
 
       //email and password validation
     if('' === email){
@@ -31,19 +50,23 @@ function App() {
       return
     }
 
-    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+    else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setEmailError('Please enter a valid email')
       return
     }
       
-    if ('' === password) {
+    else if ('' === password) {
       setPassError('Please enter a password')
       return
     }
-
+      else if(passError !== '' || emailError !== ''){
+        setIsLoggedIn(true);
+      }
+      else{
+        return;
+      }
         //add extra validation to check if email and password are stored for users
         //also check that password matches email
-      setIsLoggedIn(true);
     } 
 
   return(

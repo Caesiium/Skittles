@@ -24,6 +24,28 @@ pool.connect((err) => {
     }
 });
 
+
+//get all user info out of the table
+app.post('/api/validate', async (req, res) => {
+    const { userEmail, password } = req.body;
+    try{
+        const query = 'SELECT * FROM users WHERE user_email = $1';
+        const result = await pool.query(query, [userEmail]);
+        res.json(result.rows);
+        if(result.rows.length === 0){
+            return res.status(400).json({message: 'Invalid email or password' });
+        }
+        if(password != res.rows[0]){
+            return res.status(400).json({ message: 'Invalid email or password'});
+        }
+        res.json({ message: 'Successful login' });
+
+    } catch (err){
+        console.error('Error validating');
+        res.status(500).send('Server error');
+    }
+});
+
 //get supermarket id from given name
 async function getSupermarketIDbyName(supermarketName) {
     try{
@@ -34,14 +56,31 @@ async function getSupermarketIDbyName(supermarketName) {
             throw new Error('Supermarket not found');
         }
         const supermarket_id = result.rows[0].supermarket_id;
-        console.log(`Supermarket id found: ${supermarket_id}`);
         return supermarket_id;
         
     } catch (error){
         console.error('Error fetching supermarket ID: ', error.message);
         throw error;
     }
-}
+};
+
+async function getGroceryData(selectedItems){
+    try{
+        console.log('recieved', selectedItems);
+        if(!selectedItems || selectedItems.length === 0){
+            throw new Error('No grocery data found');
+        }
+        const query = 'SELECT * FROM groceries WHERE grocery_id = ANY($1)'
+        const result = await pool.query(query, [selectedItems]);
+        if(result.rows.length == 0){
+            throw new Error('No grocery data found');
+        }
+        return result.rows;
+    } catch (err) {
+        console.error('Error fetching grocery data', err);
+        throw err;
+    }
+}; 
 
 //add supermarket to new order
 app.post('/api/NewOrder', async (req, res) => {
@@ -60,16 +99,34 @@ app.post('/api/NewOrder', async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server error');
     }
-})
+});
 
 
-
-//select all groceries
-app.get('/api/ViewOrders', async (req,res) => {
+//select all groceries for the viewer to select from
+app.get('/api/ShopItems', async (req,res) => {
     try{
         const result = await pool.query('SELECT * FROM groceries');
         res.json(result.rows);
-    } catch{
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
+
+//send grocery information
+app.post('/api/EditOrder', async (req, res) => {
+    try{
+        console.log('request body', req.body);
+        const { selectedItems } = req.body;
+        if(!selectedItems || selectedItems.length === 0){
+            throw new Error('No grocery data found');
+        }
+        console.log('here too', selectedItems);
+        const groceryIds = selectedItems.map(item => item.grocery_id);
+        console.log('extafsbfs ids', groceryIds);
+        const result = getGroceryData(groceryIds);
+        res.json(result);
+    }catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
     }
