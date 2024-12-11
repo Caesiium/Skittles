@@ -5,6 +5,7 @@ require('dotenv').config();
 const{ Pool } = require('pg');
 app.use(cors());
 const port = 8080;
+app.use(express.json());
 
 //postgres connection
 const pool = new Pool({
@@ -22,6 +23,45 @@ pool.connect((err) => {
         console.log('Database connected');
     }
 });
+
+//get supermarket id from given name
+async function getSupermarketIDbyName(supermarketName) {
+    try{
+        const query = 'SELECT supermarket_id FROM supermarkets WHERE supermarket_name = $1'
+        const name = [supermarketName];
+        const result = await pool.query(query, name);
+        if(result.rows.length == 0) {
+            throw new Error('Supermarket not found');
+        }
+        const supermarket_id = result.rows[0].supermarket_id;
+        console.log(`Supermarket id found: ${supermarket_id}`);
+        return supermarket_id;
+        
+    } catch (error){
+        console.error('Error fetching supermarket ID: ', error.message);
+        throw error;
+    }
+}
+
+//add supermarket to new order
+app.post('/api/NewOrder', async (req, res) => {
+    const { supermarket_name } = req.body;
+    if(!supermarket_name){
+        return res.status(400).json({ message: 'Supermarket name is required'});
+    }
+    try{
+        const supermarketID = await getSupermarketIDbyName(supermarket_name);
+        const result = await pool.query(
+            'INSERT INTO orders (supermarket_id) VALUES ($1) RETURNING *',
+            [supermarketID]
+        );
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+})
+
 
 
 //select all groceries

@@ -33,7 +33,7 @@ function ShopItems(){
             <input className={'inputButton'}
                 type = "button"
                 onClick={onButtonCLick}
-                value={'Log in'}
+                value={'Search'}
             />
         </div>
             <label className="errorLabel">{itemError}</label>
