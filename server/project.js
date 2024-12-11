@@ -45,7 +45,6 @@ async function getSupermarketIDbyName(supermarketName) {
 
 //add supermarket to new order
 app.post('/api/NewOrder', async (req, res) => {
-    console.log('Request body: ', req.body);
     const { supermarket_name } = req.body;
     if(!supermarket_name){
         return res.status(400).json({ message: 'Supermarket name is required'});
@@ -62,6 +61,7 @@ app.post('/api/NewOrder', async (req, res) => {
         res.status(500).send('Server error');
     }
 })
+
 
 
 //select all groceries
