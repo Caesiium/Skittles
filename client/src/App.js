@@ -39,27 +39,27 @@ function App() {
     }
   };
 
-  const onButtonCLick = () => {
-    setEmailError('')
-    setPassError('')
+  const onButtonClick = () => {
+    setEmailError('');
+    setPassError('');
     handleSearch(email, password);
 
       //email and password validation
     if('' === email){
-      setEmailError('Please enter your email')
-      return
+      setEmailError('Please enter your email');
+      return;
     }
 
     else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setEmailError('Please enter a valid email')
-      return
+      setEmailError('Please enter a valid email');
+      return;
     }
       
     else if ('' === password) {
-      setPassError('Please enter a password')
-      return
+      setPassError('Please enter a password');
+      return;
     }
-      else if(passError !== '' || emailError !== ''){
+      if(passError !== '' || emailError !== ''){
         setIsLoggedIn(true);
       }
       else{
@@ -114,7 +114,7 @@ function App() {
               <div className={'inputContainer'}>
                   <input className={'inputButton'}
                       type = "button"
-                      onClick={onButtonCLick}
+                      onClick={onButtonClick}
                       value={'Log in'}
                   />
               </div>

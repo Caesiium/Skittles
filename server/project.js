@@ -27,22 +27,23 @@ pool.connect((err) => {
 
 //get all user info out of the table
 app.post('/api/validate', async (req, res) => {
-    const { userEmail, password } = req.body;
+    const { userEmail, userPassword } = req.body;
     try{
-        const query = 'SELECT * FROM users WHERE user_email = $1';
+        const query = 'SELECT user_password FROM users WHERE user_email = $1';
         const result = await pool.query(query, [userEmail]);
-        res.json(result.rows);
-        if(result.rows.length === 0){
-            return res.status(400).json({message: 'Invalid email or password' });
+        if(result.rows.length === 0 || !result.rows[0].user_password){
+            return res.json({ message: 'Invalid email or password' });
         }
-        if(password != res.rows[0]){
-            return res.status(400).json({ message: 'Invalid email or password'});
+        else if(userPassword !== result.rows[0].user_password){
+            return res.json({ message: 'Invalid email or password'});
         }
-        res.json({ message: 'Successful login' });
+        else{
+            return res.json({ message: 'Successful login' });
+        }
 
     } catch (err){
-        console.error('Error validating');
-        res.status(500).send('Server error');
+        console.error('Error validating', err.message);
+        return res.status(500).send('Server error');
     }
 });
 
