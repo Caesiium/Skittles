@@ -4,12 +4,14 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
 import NewOrder from './NewOrder';
 import AllOrders from './AllOrders';
 import EditOrder from './EditOrder';
 import ShopItem from './ShopItems.js';
+import Home from './Home.js';
+
 
 function App() {
   const [email, setEmail] = useState('');
@@ -19,7 +21,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
-  // const navigate = useNavigate();
+
+  
 
   const onButtonCLick = () => {
     setEmailError('')
@@ -51,10 +54,12 @@ function App() {
       {isLoggedIn ? (
         <>
           <ul className='navBar'>
-            <li><Link to="/NewOrder">+</Link></li>
+            <li><Link to="/Home">Home</Link></li>
+            <li><Link to="/NewOrder">New Order</Link></li>
             <li><Link to="/AllOrders"> View Orders</Link></li>
           </ul>
           <Routes>
+            <Route path="/Home" element={<Home />} />
             <Route path="/NewOrder" element={<NewOrder />} />
             <Route path="/AllOrders" element={<AllOrders />} />
             <Route path="/EditOrder" element={<EditOrder />} />

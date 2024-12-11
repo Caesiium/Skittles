@@ -1,0 +1,46 @@
+/* Home.css */
+.home-container {
+    display: flex;
+    justify-content: center;  
+    align-items: center;     
+    height: 100vh;            
+    background-color: #ff6896; 
+  }
+  
+  .newOrder {
+    text-align: center;       
+    padding: 10%;
+    background-color: #AEB8FE;  
+    color: #F1F2F6;             
+    border-radius: 10px;      
+  }
+  
+  .newOrder label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    font-size: 30px;           
+    color: #F1F2F6;             
+  }
+  
+  .newOrder button {
+    margin: 10px 10px;              
+    padding: 10px 20px;         
+    background-color: #FF8600;   
+    color: #F1F2F6;              
+    font-size: 20px;             
+    border-radius: 5%;           
+    border: none;                
+    cursor: pointer;            
+    width: 200px;               
+    transition: background-color 0.3s ease; 
+    margin-bottom: 20px;  
+}
+  
+  .newOrder button:hover {
+    background-color: #cb52fc;   
+  }
+  
+  .newOrder button:focus {
+    outline: none;               
+  }
