@@ -2,32 +2,42 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Select from 'react-select';
 function NewOrder(){
-    // const [data, setData] = useState(null);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+    
 
-    // useEffect(() => {
-    //     const fetchData = async() => {
-    //         try {
-    //             const response = await axios.get('http://localhost:8080/api/NewOrder')
-    //             setData(response.data);
-    //             setLoading(false);
-    //         } catch (err){
-    //             setError(err.message);
-    //             setLoading(false);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
+    const supermarkets = [
+        {value: "0", label: "Select Supermarket"},
+        {value: "1", label: "Sainsbury's"},
+        {value: "2", label: "Aldi"},
+        {value: "3", label: "Lidl"},
+        {value: "4", label: "Tesco"}
+    ];
 
-    // if(loading){
-    //     return <div>Loading...</div>;
-    // }
+    const [selectedOption, setSelectedOption] = useState(supermarkets[0]);
+    const [errorMessage, seterrorMessage] = useState('');
+    const handleSubmit = async (a) => {
+        a.preventDefault();
+        if(!selectedOption){
+            seterrorMessage('Please select a supermarket');
+            return;
+        }
+        try{
+            const response = await axios.post('http://localhost:8080/api/NewOrder', {
+                supermarket_name: selectedOption.value,
+            });
+            console.log(response.data);
+            seterrorMessage('');
+        }
+        catch (error){
+            seterrorMessage('Failed to select supermarket, try again');
+            console.error(error);
+        }
+    };
 
-    // if(error){
-    //     return <div>Error: {error}</div>
-    // }
+    const handleChange = (option) => {
+        setSelectedOption(option);
+    }
 
     return(
             <div>
@@ -36,20 +46,26 @@ function NewOrder(){
                 <li key={post.title}>{post.title}</li>
             ))} */}
            </ul>
-           <form className='newOrder'>
+           <form className='newOrder' onSubmit={handleSubmit}>
             <label>
                 Supermarket
-                <select className='superMarket'>
+                {/* <select className='superMarket'>
                     <option value="NoOp">Please Choose a Shop</option>
                     <option value = "Sainsburys">Sainsburys</option>
                     <option value="Lidl">Lidl</option>
                     <option value="Tesco">Tesco</option>
                     <option value="Aldi">Aldi</option>
-                </select>
+                </select> */}
+                <Select 
+                    value={selectedOption}
+                    onChange={handleChange}
+                    options={supermarkets}
+                />
             </label>
             <br/>
             <button><Link to="/EditOrder">Start Order</Link></button>
            </form>
+            {errorMessage && <p style={{ color: 'red '}}>{errorMessage}</p>}
         </div>
         
         
