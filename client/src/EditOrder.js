@@ -47,8 +47,31 @@ function EditOrder({ selectedItems, selectedSupermarket, orderId, currentUser })
     console.log('yup', currentUser);
 
     const saveOrder = async () => {
-        
-    }
+        try{
+            const orderData = groceryDetails.map((row, index) => {
+                const item = selectedItems.find(
+                    (selected) => selected.grocery_id === row.grocery_id
+                );
+                return{
+                    grocery_id: row.grocery_id,
+                    grocery_name: row.grocery_name,
+                    grocery_price: row.grocery_price,
+                    quantity: item?.quantity || 0,
+                    total_cost: row.grocery_price * (item?.quantity || 0),
+                    user_name: currentUser.user_name,
+                    order_id: orderId
+                };
+            });
+
+            const response = await axios.post('http://localhost:8080/api/saveOrder', { orderData, orderId });
+            if (response.data === 200){
+                alert("Order saved successfully");
+            }
+
+        } catch(err){
+            console.error("Error saving", err.message);
+        }
+    };
 
     return(
             <div>

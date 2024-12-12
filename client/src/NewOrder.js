@@ -38,7 +38,7 @@ function NewOrder({ setSelectedSupermarket, setOrderId }){
 
     const handleChange = (option) => {
         setSelectedOption(option);
-        setSelectedSupermarket(option);
+        setSelectedSupermarket(option)
     }
 
     const customStyles = {
