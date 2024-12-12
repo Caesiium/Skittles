@@ -21,6 +21,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState('');
 
   const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedSupermarket, setSelectedSupermarket] = useState('');
+  const [orderId, setOrderId] = useState('');
 
 
   // const navigate = useNavigate();
@@ -86,10 +88,10 @@ function App() {
             <li><Link to="/AllOrders"> View Orders</Link></li>
           </ul>
           <Routes>
-            <Route path="/NewOrder" element={<NewOrder />} />
+            <Route path="/NewOrder" element={<NewOrder setSelectedSupermarket={setSelectedSupermarket} setOrderId={setOrderId} />} />
             <Route path="/AllOrders" element={<AllOrders />} />
-            <Route path="/EditOrder" element={<EditOrder selectedItems={selectedItems} />} />
-            <Route path='/ShopItems' element={<ShopItems selectedItems={selectedItems} setSelectedItems={setSelectedItems} />} />
+            <Route path="/EditOrder" element={<EditOrder selectedItems={selectedItems} selectedSupermarket={selectedSupermarket} orderId={orderId} />} />
+            <Route path='/ShopItems' element={<ShopItems selectedItems={selectedItems} setSelectedItems={setSelectedItems} selectedSupermarket={selectedSupermarket} />} />
           </Routes>
         </>
         

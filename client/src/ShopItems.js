@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-function ShopItems({ selectedItems, setSelectedItems }){
+function ShopItems({ selectedItems, setSelectedItems, selectedSupermarket }){
 
     const [grocery, setGrocery] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,8 +13,9 @@ function ShopItems({ selectedItems, setSelectedItems }){
     useEffect(() => {
         const getGroceries = async () => {
             try{
-                const response = await axios.get('http://localhost:8080/api/ShopItems');
-                console.log('Fetched: ', response.data);
+                const response = await axios.get('http://localhost:8080/api/ShopItems', {
+                    supermarketName: selectedSupermarket,
+                });
                 setGrocery(response.data);
                 setLoading(false);
             } catch (err) {
