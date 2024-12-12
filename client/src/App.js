@@ -10,7 +10,7 @@ import {
 import NewOrder from './NewOrder';
 import AllOrders from './AllOrders';
 import EditOrder from './EditOrder';
-import ShopItem from './ShopItems';
+import ShopItems from './ShopItems';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -18,6 +18,9 @@ function App() {
   const [emailError, setEmailError] = useState('');
   const [passError, setPassError] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
+
+  const [selectedItems, setSelectedItems] = useState([]);
 
 
   // const navigate = useNavigate();
@@ -29,6 +32,7 @@ function App() {
       });
       if(response.data.message === 'Successful login'){
         console.log('User validated');
+        setIsLoggedIn(true);
       }
       else{
         setPassError('Invalid email or password');
@@ -39,10 +43,11 @@ function App() {
     }
   };
 
+
   const onButtonClick = () => {
     setEmailError('');
     setPassError('');
-    handleSearch(email, password);
+   
 
       //email and password validation
     if('' === email){
@@ -50,15 +55,18 @@ function App() {
       return;
     }
 
-    else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setEmailError('Please enter a valid email');
       return;
     }
       
-    else if ('' === password) {
+    if ('' === password) {
       setPassError('Please enter a password');
       return;
     }
+
+      handleSearch(email, password);
+      
       if(passError !== '' || emailError !== ''){
         setIsLoggedIn(true);
       }
@@ -80,8 +88,8 @@ function App() {
           <Routes>
             <Route path="/NewOrder" element={<NewOrder />} />
             <Route path="/AllOrders" element={<AllOrders />} />
-            <Route path="/EditOrder" element={<EditOrder />} />
-            <Route path='/ShopItems' element={<ShopItem />} />
+            <Route path="/EditOrder" element={<EditOrder selectedItems={selectedItems} />} />
+            <Route path='/ShopItems' element={<ShopItems selectedItems={selectedItems} setSelectedItems={setSelectedItems} />} />
           </Routes>
         </>
         
@@ -104,6 +112,7 @@ function App() {
               <div className={'inputContainer'}>
                   <input
                       value={password}
+                      type="password"
                       placeholder='Enter your password'
                       onChange={(ev) => setPassword(ev.target.value)}
                       className={'inputBox'}
