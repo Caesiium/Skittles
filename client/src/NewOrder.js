@@ -68,7 +68,9 @@ function NewOrder(){
                 />
             </label>
             <br/>
-            <button><Link to="/EditOrder">Start Order</Link></button>
+            <button type="submit" disabled = {selectedOption.value === "0"}>
+                {selectedOption.value === "0" ? "Please select a supermarket" : <Link to="/EditOrder">Start Order</Link>}
+            </button>
            </form>
             {errorMessage && <p style={{ color: ' red '}}>{errorMessage}</p>}
         </div>
