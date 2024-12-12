@@ -13,8 +13,9 @@ function ShopItems({ selectedItems, setSelectedItems, selectedSupermarket }){
     useEffect(() => {
         const getGroceries = async () => {
             try{
+                console.log('sup', selectedSupermarket.label);
                 const response = await axios.get('http://localhost:8080/api/ShopItems', {
-                    supermarketName: selectedSupermarket,
+                    params: { supermarketName : selectedSupermarket.label },
                 });
                 setGrocery(response.data);
                 setLoading(false);
