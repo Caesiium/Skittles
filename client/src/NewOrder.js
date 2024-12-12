@@ -58,7 +58,7 @@ function NewOrder({ setSelectedSupermarket, setOrderId }){
     };
 
     return(
-            <div>
+        <div>
            <ul>
            {/* {data && Array.isArray(data) && data.map((post, index) => (
                 <li key={post.title}>{post.title}</li>
@@ -86,7 +86,7 @@ function NewOrder({ setSelectedSupermarket, setOrderId }){
                 {selectedOption.value === "0" ? "Please select a supermarket" : <Link to="/EditOrder">Start Order</Link>}
             </button>
            </form>
-            {errorMessage && <p style={{ color: 'red '}}>{errorMessage}</p>}
+            {errorMessage && <p style={{ color: ' red '}}>{errorMessage}</p>}
         </div>
         
         

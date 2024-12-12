@@ -1,5 +1,5 @@
 .App {
-  background-color: #F1F2F6;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,6 +152,31 @@
 }
 .superMarket {
   padding: 1%;
-  color: #F1F2F6;
+  color: #000;
   background-color: #758BFD;
+}
+.supermarkets {
+  padding: 1%;
+  width: 75%;
+  font-size: 15px;
+  border-radius: 2%;
+  background-color: #27187E;
+  color: #27187E;
+}
+
+.newOrder .react-select {
+  padding: 1%;
+  width: 75%;
+  font-size: 15px;
+  border-radius: 2%;
+  background-color: #27187E;
+  color: #27187E;
+}
+
+.newOrder .react-select__single-value {
+  color:#F1F2F6;
+}
+
+.newOrder .react-select__option {
+  background-color: #AEB8FE;
 }

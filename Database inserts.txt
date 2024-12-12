@@ -1,5 +1,4 @@
-INSERT INTO supermarkets (supermarket_name) VALUES ('Sainsburys', 'Morrisons', 'Aldi', 'Asda', 'Co-op', 'Farmfoods', 'Marks & Spencer', 'Morrisons', 'Tesco', 'Waitrose');
-
+INSERT INTO supermarkets (supermarket_name) VALUES ('Sainsburys'), ('Morrisons'), ('Aldi'), ('Asda'), ('Co-op'), ('Farmfoods'), ('Marks & Spencer'), ('Morrisons'), ('Tesco'), ('Waitrose');
 
 INSERT INTO groceries (grocery_name, grocery_price, supermarket_id, grocery_type) VALUES ('Apple', 0.25, 1, 'Fruit'), ('Apple', 0.2, 2, 'Fruit'), ('Apple', 0.22, 3, 'Fruit'), ('Apple', 0.2, 4, 'Fruit'), ('Apple', 0.3, 5, 'Fruit'), ('Apple', 0.15, 6, 'Fruit'), ('Apple', 0.35, 7, 'Fruit'), ('Apple', 0.4, 8, 'Fruit'), ('Apple', 0.27, 9, 'Fruit'), ('Apple', 0.25, 10, 'Fruit'), ('Apple Juice', 2.00, 1, 'Juice and Drinks'), ('Apple Juice', 2.25, 2, 'Juice and Drinks'), ('Apple Juice', 1.75, 3, 'Juice and Drinks'), ('Apple Juice', 1.60, 4, 'Juice and Drinks'), ('Apple Juice', 3.00, 5, 'Juice and Drinks'), ('Apple Juice', 2.00, 6, 'Juice and Drinks'), ('Apple Juice', 1.25, 7, 'Juice and Drinks'), ('Apple Juice', 3.00, 8, 'Juice and Drinks'), ('Apple Juice', 2.80, 9, 'Juice and Drinks'), ('Apple Juice', 2.00, 10, 'Juice and Drinks'), ('Bacon', 4.00, 1, 'Meat and Eggs'),
 ('Bacon', 3.80, 2, 'Meat and Eggs'),
