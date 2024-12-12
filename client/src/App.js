@@ -82,7 +82,7 @@ function App() {
       {isLoggedIn ? (
         <>
           <ul className='navBar'>
-            <li><Link to="/NewOrder">+</Link></li>
+            <li><Link to="/NewOrder">New Order</Link></li>
             <li><Link to="/AllOrders"> View Orders</Link></li>
           </ul>
           <Routes>

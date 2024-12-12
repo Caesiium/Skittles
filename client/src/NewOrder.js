@@ -7,7 +7,7 @@ function NewOrder(){
     
 
     const supermarkets = [
-        {value: "0", label: "Select Supermarket"},
+        {value: "0", label: "Select Supermarket!"},
         {value: "1", label: "Sainsbury's"},
         {value: "2", label: "Aldi"},
         {value: "3", label: "Lidl"},
@@ -39,6 +39,11 @@ function NewOrder(){
         setSelectedOption(option);
     }
 
+
+
+
+
+
     return(
             <div>
            <ul>
@@ -65,7 +70,7 @@ function NewOrder(){
             <br/>
             <button><Link to="/EditOrder">Start Order</Link></button>
            </form>
-            {errorMessage && <p style={{ color: 'red '}}>{errorMessage}</p>}
+            {errorMessage && <p style={{ color: ' red '}}>{errorMessage}</p>}
         </div>
         
         
