@@ -130,7 +130,7 @@ function EditOrder({ selectedItems }){
            <label>
                 Apply discount
                 <select className='discount'>
-                    <option value="NoOp">Please Choose an available discount</option>
+                    <option value="NoOp">Please choose an available discount</option>
                 </select>
             </label>
             <p>
