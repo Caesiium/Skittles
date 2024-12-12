@@ -33,10 +33,12 @@ function App() {
         userEmail: email, userPassword: password,
       });
       if(response.data.message === 'Successful login'){
-        console.log('User validated');
+        console.log('User validated', response.data.userName);
         //setCurrentUser(response.data.userName);
         //console.log('user name', response.data.userName);
         setIsLoggedIn(true);
+        setCurrentUser(response.data.userName);
+        console.log('name', currentUser);
       }
       else{
         setPassError('Invalid email or password');
@@ -70,6 +72,7 @@ function App() {
     }
 
       handleSearch(email, password);
+      console.log('user', currentUser);
       
       if(passError !== '' || emailError !== ''){
         setIsLoggedIn(true);
@@ -90,7 +93,7 @@ function App() {
             <li><Link to="/AllOrders"> View Orders</Link></li>
           </ul>
           <Routes>
-            <Route path="/NewOrder" element={<NewOrder setSelectedSupermarket={setSelectedSupermarket} setOrderId={setOrderId} />} />
+            <Route path="/NewOrder" element={<NewOrder setSelectedSupermarket={setSelectedSupermarket} setOrderId={setOrderId} setCurrentUser={setCurrentUser} />} />
             <Route path="/AllOrders" element={<AllOrders />} />
             <Route path="/EditOrder" element={<EditOrder selectedItems={selectedItems} selectedSupermarket={selectedSupermarket} orderId={orderId} currentUser={currentUser} />} />
             <Route path='/ShopItems' element={<ShopItems selectedItems={selectedItems} setSelectedItems={setSelectedItems} selectedSupermarket={selectedSupermarket} />} />

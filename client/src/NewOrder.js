@@ -17,10 +17,11 @@ function NewOrder({ setSelectedSupermarket, setOrderId }){
     const [errorMessage, seterrorMessage] = useState('');
     const handleSubmit = async (a) => {
         a.preventDefault();
-        if(!selectedOption){
+        if(!selectedOption || selectedOption.value === "0"){
             seterrorMessage('Please select a supermarket');
             return;
         }
+        console.log('selected', selectedOption);
         try{
             const response = await axios.post('http://localhost:8080/api/NewOrder', {
                 supermarket_name: selectedOption.label,
@@ -37,6 +38,7 @@ function NewOrder({ setSelectedSupermarket, setOrderId }){
 
     const handleChange = (option) => {
         setSelectedOption(option);
+        setSelectedSupermarket(option);
     }
 
     const customStyles = {
@@ -67,13 +69,6 @@ function NewOrder({ setSelectedSupermarket, setOrderId }){
            <form className='newOrder' onSubmit={handleSubmit}>
             <label>
                 Supermarket
-                {/* <select className='superMarket'>
-                    <option value="NoOp">Please Choose a Shop</option>
-                    <option value = "Sainsburys">Sainsburys</option>
-                    <option value="Lidl">Lidl</option>
-                    <option value="Tesco">Tesco</option>
-                    <option value="Aldi">Aldi</option>
-                </select> */}
                 <Select 
                     value={selectedOption}
                     onChange={handleChange}
@@ -82,8 +77,12 @@ function NewOrder({ setSelectedSupermarket, setOrderId }){
                 />
             </label>
             <br/>
-            <button type="submit" disabled = {selectedOption.value === "0"}>
-                {selectedOption.value === "0" ? "Please select a supermarket" : <Link to="/EditOrder">Start Order</Link>}
+            <button 
+                type="submit"
+                disabled = {selectedOption.value === "0"}>
+                {selectedOption.value === "0" 
+                    ? "Please select a supermarket" 
+                    : "Start Order"}
             </button>
            </form>
             {errorMessage && <p style={{ color: ' red '}}>{errorMessage}</p>}
