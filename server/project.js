@@ -98,18 +98,27 @@ app.post('/api/NewOrder', async (req, res) => {
             'INSERT INTO orders (supermarket_id) VALUES ($1) RETURNING *',
             [supermarketID]
         );
-        res.json(result.rows);
+        res.json(result.rows[0].order_id);
     } catch (err) {
         console.error('Error here???', err.message);
         res.status(500).send('Server error');
     }
 });
 
+//insert all groceries into the items_in_order page
+// app.post('api/EditOrder', async (req, res) => {
+    
+// })
 
 //select all groceries for the viewer to select from
 app.get('/api/ShopItems', async (req,res) => {
     try{
-        const result = await pool.query('SELECT * FROM groceries');
+        const supermarketName = req.body;
+        const superId = getSupermarketIDbyName(supermarketName);
+        console.log('id ', superId);
+        const result = await pool.query('SELECT * FROM groceries WHERE supermarket_id = $1', 
+            [superId]
+        );
         res.json(result.rows);
     } catch (err) {
         console.error('Error here??????', err.message);
