@@ -14,6 +14,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
     depends_on:
       - server
+      - db
 
   server:
     build:
@@ -26,3 +27,26 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - DB_HOST=db  # Read DB_HOST from .env file
+      - DB_PORT=5432  # Read DB_PORT from .env file
+      - DB_NAME=ssh_groceries  # Read DB_NAME from .env file
+      - DB_USER=postgres  # Read DB_USER from .env file
+      - DB_PASSWORD=password123
+    depends_on:
+      - db
+    
+  db:
+    image: postgres:13  # Use a specific version of PostgreSQL
+    ports:
+      - "5432:5432"  # Expose PostgreSQL port
+    environment:
+      - POSTGRES_DB=ssh_groceries  # Create database as per the .env file
+      - POSTGRES_USER=postgres  # Use user from the .env file
+      - POSTGRES_PASSWORD=password123  # Use password from the .env file
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./ssh_groceries_schema.sql:/docker-entrypoint-initdb.d/ssh_groceries_schema.sql
+      - ./Database_inserts.txt:/docker-entrypoint-initdb.d/Database_inserts.txt
+
+volumes:
+  pgdata:
