@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
-function EditOrder({ selectedItems, selectedSupermarket, orderId }){
+function EditOrder({ selectedItems, selectedSupermarket, orderId, currentUser }){
     
     const location = useLocation();
     console.log('location', location.state);
@@ -77,6 +77,7 @@ function EditOrder({ selectedItems, selectedSupermarket, orderId }){
                                 <td>{row.grocery_price}</td>
                                 <td>{item?.quantity || 0}</td>
                                 <td>{row.grocery_price * (item?.quantity || 0)}</td>
+                                <td>{currentUser.data}</td>
                             </tr>
                         );
                     })}

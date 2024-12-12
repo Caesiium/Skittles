@@ -38,6 +38,7 @@ app.post('/api/validate', async (req, res) => {
             return res.json({ message: 'Invalid email or password'});
         }
         else{
+            const userName = result.rows[0].user_name;
             return res.json({ message: 'Successful login' });
         }
 
