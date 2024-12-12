@@ -1,19 +1,17 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-function NewOrder(){
-    
+function NewOrder({ setSelectedSupermarket, setOrderId }){
 
     const supermarkets = [
         {value: "0", label: "Select Supermarket"},
-        {value: "1", label: "Sainsbury's"},
+        {value: "1", label: "Sainsburys"},
         {value: "2", label: "Aldi"},
         {value: "3", label: "Lidl"},
         {value: "4", label: "Tesco"}
     ];
-
+    const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState(supermarkets[0]);
     const [errorMessage, seterrorMessage] = useState('');
     const handleSubmit = async (a) => {
@@ -24,10 +22,11 @@ function NewOrder(){
         }
         try{
             const response = await axios.post('http://localhost:8080/api/NewOrder', {
-                supermarket_name: selectedOption.value,
+                supermarket_name: selectedOption.label,
             });
-            console.log(response.data);
-            seterrorMessage('');
+            console.log('Data here', response.data);
+            setOrderId(response.data);
+            navigate('/EditOrder');
         }
         catch (error){
             seterrorMessage('Failed to select supermarket, try again');
@@ -37,6 +36,7 @@ function NewOrder(){
 
     const handleChange = (option) => {
         setSelectedOption(option);
+        setSelectedSupermarket(option);
     }
 
     return(
@@ -63,7 +63,7 @@ function NewOrder(){
                 />
             </label>
             <br/>
-            <button><Link to="/EditOrder">Start Order</Link></button>
+            <button type="submit"> Start Order</button>
            </form>
             {errorMessage && <p style={{ color: 'red '}}>{errorMessage}</p>}
         </div>
