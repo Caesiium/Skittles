@@ -34,6 +34,8 @@ function App() {
       });
       if(response.data.message === 'Successful login'){
         console.log('User validated');
+        //setCurrentUser(response.data.userName);
+        //console.log('user name', response.data.userName);
         setIsLoggedIn(true);
       }
       else{
@@ -90,7 +92,7 @@ function App() {
           <Routes>
             <Route path="/NewOrder" element={<NewOrder setSelectedSupermarket={setSelectedSupermarket} setOrderId={setOrderId} />} />
             <Route path="/AllOrders" element={<AllOrders />} />
-            <Route path="/EditOrder" element={<EditOrder selectedItems={selectedItems} selectedSupermarket={selectedSupermarket} orderId={orderId} />} />
+            <Route path="/EditOrder" element={<EditOrder selectedItems={selectedItems} selectedSupermarket={selectedSupermarket} orderId={orderId} currentUser={currentUser} />} />
             <Route path='/ShopItems' element={<ShopItems selectedItems={selectedItems} setSelectedItems={setSelectedItems} selectedSupermarket={selectedSupermarket} />} />
           </Routes>
         </>
