@@ -1,5 +1,5 @@
-
-import React, { useState, useEffect } from 'react';
+import './App.css'
+import React, { useState, } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
@@ -7,7 +7,7 @@ function NewOrder(){
     
 
     const supermarkets = [
-        {value: "0", label: "Select Supermarket!"},
+        {value: "0", label: "Select Supermarket"},
         {value: "1", label: "Sainsbury's"},
         {value: "2", label: "Aldi"},
         {value: "3", label: "Lidl"},
@@ -40,12 +40,29 @@ function NewOrder(){
     }
 
 
-
+    //styles here because app.css seems to have 0 effect on the dropdown
+    const customStyles = {
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected
+                ? "#758BFD" //selected
+                : state.isFocused
+                ? "#758BFD" //hovering
+                : "#758BFD",       //default
+            color: "#F1F2F6",
+            padding: 10
+        }),
+        control: (provided) => ({
+            ...provided,
+            borderColor: "#27187E",
+            boxShadow: "none",
+        })
+    };
 
 
 
     return(
-            <div>
+        <div>
            <ul>
            {/* {data && Array.isArray(data) && data.map((post, index) => (
                 <li key={post.title}>{post.title}</li>
@@ -65,10 +82,13 @@ function NewOrder(){
                     value={selectedOption}
                     onChange={handleChange}
                     options={supermarkets}
+                    styles={customStyles}
                 />
             </label>
             <br/>
-            <button><Link to="/EditOrder">Start Order</Link></button>
+            <button type="submit" disabled = {selectedOption.value === "0"}>
+                {selectedOption.value === "0" ? "Please select a supermarket" : <Link to="/EditOrder">Start Order</Link>}
+            </button>
            </form>
             {errorMessage && <p style={{ color: ' red '}}>{errorMessage}</p>}
         </div>
