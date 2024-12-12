@@ -76,7 +76,10 @@ async function getGroceryData(selectedItems){
         if(result.rows.length == 0){
             throw new Error('No grocery data found');
         }
+        console.log('????', result.rows);
+        
         return result.rows;
+
     } catch (err) {
         console.error('Error fetching grocery data', err);
         throw err;
@@ -95,9 +98,9 @@ app.post('/api/NewOrder', async (req, res) => {
             'INSERT INTO orders (supermarket_id) VALUES ($1) RETURNING *',
             [supermarketID]
         );
-        res.json(result.rows[0]);
+        res.json(result.rows);
     } catch (err) {
-        console.error(err.message);
+        console.error('Error here???', err.message);
         res.status(500).send('Server error');
     }
 });
@@ -109,7 +112,7 @@ app.get('/api/ShopItems', async (req,res) => {
         const result = await pool.query('SELECT * FROM groceries');
         res.json(result.rows);
     } catch (err) {
-        console.error(err.message);
+        console.error('Error here??????', err.message);
         res.status(500).send('Server error');
     }
 });
@@ -125,10 +128,10 @@ app.post('/api/EditOrder', async (req, res) => {
         console.log('here too', selectedItems);
         const groceryIds = selectedItems.map(item => item.grocery_id);
         console.log('extafsbfs ids', groceryIds);
-        const result = getGroceryData(groceryIds);
+        const result = await getGroceryData(groceryIds);
         res.json(result);
     }catch (err) {
-        console.error(err.message);
+        console.error('Error here yes', err.message);
         res.status(500).send('Server error');
     }
 });
