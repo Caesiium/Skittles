@@ -24,6 +24,37 @@ pool.connect((err) => {
     }
 });
 
+app.post('/api/saveOrder', async (req,res) => {
+    const { orderData, orderId } = req.body;
+    console.log(orderId);
+    try{
+        const checkOrder ='SELECT * FROM orders WHERE order_id = $1';
+        const orderCheckResult = await pool.query(checkOrder, [orderId]);
+        if(!orderCheckResult || orderCheckResult.rows.length === 0){
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        const item_in_order_query = `
+        INSERT INTO items_in_order (order_id, user_id, grocery_id, price, quantity)
+        VALUES ($1, $2, $3, $4, $5)
+        `;
+
+        for(let item of orderData){
+            const itemVals = [
+                orderId,
+                1, 
+                item.grocery_id,
+                item.grocery_price,
+                item.quantity,
+            ];
+            await pool.query(item_in_order_query, itemVals);
+           
+        }
+        res.status(200).json({ message: 'Order items are saved'});
+         
+    }catch (err){
+        console.error('Error saving items', err.message);
+    }
+});
 
 //get all user info out of the table
 app.post('/api/validate', async (req, res) => {
@@ -39,7 +70,6 @@ app.post('/api/validate', async (req, res) => {
         }
         else{
             const userName = result.rows[0].user_name;
-            console.log('nanananame', userName);
             return res.json({ message: 'Successful login', userName });
         }
 
@@ -90,6 +120,26 @@ async function getGroceryData(selectedItems){
         throw err;
     }
 }; 
+
+
+
+//add users into users_in_order table
+// app.post('/api/NewOrder', async (req,res) => {
+//     const { orderID, userID } = req.body;
+//     if(!orderID || !userID){
+//         return res.status(400).json({ message: 'Invalid inputs'});
+//     }
+//     try{
+//         const result = await pool.query(
+//             'INSERT INTO users_in_order (orderID, userID) VALUES ($1, $2) RETURNING *',
+//             [orderID, userID],
+//         );
+//         res.json(result.rows[0].user_in_order_id);
+//     } catch (err) {
+//         console.error('Error here?', err.message);
+//         res.status(500).send('Server error');
+//     }
+// })
 
 //add supermarket to new order
 app.post('/api/NewOrder', async (req, res) => {
@@ -198,21 +248,21 @@ app.post('/api/NewOrder', async (req, res) => {
     }
 });
 
-//add items to order
+// //add items to order
 
-app.post('/api/NewOrder', async (req, res) => {
-    try{
-        const { order_id, user_id } = req.body;
-        const result = await pool.query(
-            'INSERT INTO users_in_orders (order_id, user_id) VALUES ($1, $2) RETURNING *',
-            [order_id, user_id]
-        );
-        res.json(result.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server error');
-    }
-});
+// app.post('/api/NewOrder', async (req, res) => {
+//     try{
+//         const { order_id, user_id } = req.body;
+//         const result = await pool.query(
+//             'INSERT INTO users_in_orders (order_id, user_id) VALUES ($1, $2) RETURNING *',
+//             [order_id, user_id]
+//         );
+//         res.json(result.rows[0]);
+//     } catch (err) {
+//         console.error(err.message);
+//         res.status(500).send('Server error');
+//     }
+// });
 
 
 const ViewOrdersData = [
