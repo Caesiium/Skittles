@@ -44,7 +44,7 @@ function EditOrder({ selectedItems, selectedSupermarket, orderId, currentUser })
         return <div>Error: {error.message}</div>;
     }
 
-    console.log('yup', orderId);
+    console.log('yup', currentUser);
 
     const saveOrder = async () => {
         
@@ -77,7 +77,7 @@ function EditOrder({ selectedItems, selectedSupermarket, orderId, currentUser })
                                 <td>{row.grocery_price}</td>
                                 <td>{item?.quantity || 0}</td>
                                 <td>{row.grocery_price * (item?.quantity || 0)}</td>
-                                <td>{currentUser.data}</td>
+                                <td>{currentUser}</td>
                             </tr>
                         );
                     })}

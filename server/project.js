@@ -29,7 +29,7 @@ pool.connect((err) => {
 app.post('/api/validate', async (req, res) => {
     const { userEmail, userPassword } = req.body;
     try{
-        const query = 'SELECT user_password FROM users WHERE user_email = $1';
+        const query = 'SELECT user_password, user_name FROM users WHERE user_email = $1';
         const result = await pool.query(query, [userEmail]);
         if(result.rows.length === 0 || !result.rows[0].user_password){
             return res.json({ message: 'Invalid email or password' });
@@ -39,7 +39,8 @@ app.post('/api/validate', async (req, res) => {
         }
         else{
             const userName = result.rows[0].user_name;
-            return res.json({ message: 'Successful login' });
+            console.log('nanananame', userName);
+            return res.json({ message: 'Successful login', userName });
         }
 
     } catch (err){
