@@ -23,9 +23,9 @@ CREATE TABLE users (
 CREATE TABLE orders (
 	order_id SERIAL PRIMARY KEY, 
 	supermarket_id INT NOT NULL, 
-	total_price INT, 
+	total_price DECIMAL, 
 	order_made DATE NOT NULL DEFAULT CURRENT_DATE, 
-	FOREIGN KEY supermarket_id REFERENCES supermarkets(supermarket_id)
+	FOREIGN KEY (supermarket_id) REFERENCES supermarkets(supermarket_id)
 );
 
 CREATE TABLE users_in_order (
